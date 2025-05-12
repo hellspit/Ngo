@@ -19,11 +19,10 @@ import {
 interface Event {
   id: string;
   title: string;
-  date: string;
   description: string;
-  location: string;
+  date: string;
   image: string;
-  badge: string;
+  location: string;
 }
 
 type NavItem = {
@@ -34,7 +33,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: 'Home', icon: <Globe size={20} />, href: '/' },
-  { label: 'About Us', icon: <Info size={20} />, href: '/AboutUs' },
+  { label: 'About Us', icon: <Info size={20} />, href: '/about' },
   { label: 'Media', icon: <FileText size={20} />, href: '/media' },
   { label: 'Space Community', icon: <Users size={20} />, href: '/community' },
   { label: 'Space Calendar', icon: <Calendar size={20} />, href: '/calendar' },
@@ -158,48 +157,56 @@ export default function Navbar() {
 </section>
 <section className="event-section">
   <div className="event-content">
-    <h2 className="event-title">Our <span className="highlight">Events</span></h2>
+    <h2 className="event-title">Upcoming <span className="highlight">Events</span></h2>
     <div className="event-gallery-container">
       <div className="gallery-track" ref={galleryTrackRef}>
-        {events.map((event) => (
+        {events.map(event => (
           <div key={event.id} className="gallery-card">
-            <div className="card-content">
-              <div className="card-image-wrapper">
-                <img src={event.image} alt={event.title} className="gallery-image" />
-                <div className="card-badge">{event.badge}</div>
+            <div className="event-image-container">
+              <img src={event.image} alt={event.title} className="event-image" />
+              <div className="event-date-badge">
+                {new Date(event.date).toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'short'
+                })}
               </div>
-              <div className="card-info">
-                <span className="card-date">{event.date}</span>
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-                <div className="card-footer">
-                  <span className="location">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    {event.location}
-                  </span>
-                  <button className="learn-more">Learn More</button>
+            </div>
+            <div className="event-details">
+              <h3>{event.title}</h3>
+              <p className="event-description">{event.description}</p>
+              <div className="event-meta">
+                <div className="event-location">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>{event.location}</span>
+                </div>
+                <div className="event-time">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>{new Date(event.date).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit'
+                  })}</span>
                 </div>
               </div>
             </div>
           </div>
         ))}
       </div>
-      
-      <div className="gallery-controls">
-        <button className="control-btn prev" onClick={() => scrollGallery('prev')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        <button className="control-btn next" onClick={() => scrollGallery('next')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
-      </div>
+      <button className="gallery-nav prev" onClick={() => scrollGallery('prev')}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button className="gallery-nav next" onClick={() => scrollGallery('next')}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
