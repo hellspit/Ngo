@@ -176,3 +176,12 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: 'Failed to delete event' }, { status: 500 });
   }
 } 
+
+
+
+
+// host/api/v1/routes?= **
+// host/api/v2/routes?=events
+
+// host/endpoints?= **
+
