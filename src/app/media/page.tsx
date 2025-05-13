@@ -43,7 +43,7 @@ export default function MediaPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/ourEvents');
+      const response = await fetch('/api/media');
       const data = await response.json();
       setEvents(data);
     } catch (error) {

@@ -147,7 +147,13 @@ export async function PUT(request: Request) {
 // DELETE /api/events
 export async function DELETE(request: Request) {
   try {
-    const { id } = await request.json();
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Event ID is required' }, { status: 400 });
+    }
+
     const events = await readEvents();
     
     // Find event to delete
@@ -175,10 +181,7 @@ export async function DELETE(request: Request) {
     console.error('Error deleting event:', error);
     return NextResponse.json({ error: 'Failed to delete event' }, { status: 500 });
   }
-} 
-
-
-
+}
 
 // host/api/v1/routes?= **
 // host/api/v2/routes?=events

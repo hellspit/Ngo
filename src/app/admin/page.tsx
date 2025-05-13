@@ -85,17 +85,17 @@ export default function AdminPage() {
 
   const fetchOurEvents = async () => {
     try {
-      const response = await fetch('/api/ourEvents');
+      const response = await fetch('/api/media');
       const data = await response.json();
       setOurEvents(data);
     } catch (error) {
-      console.error('Error fetching our events:', error);
+      console.error('Error fetching media events:', error);
     }
   };
 
   const handleDeleteEvent = async (eventId: string, type: 'regular' | 'our') => {
     try {
-      const endpoint = type === 'regular' ? '/api/events' : '/api/ourEvents';
+      const endpoint = type === 'regular' ? '/api/events' : '/api/media';
       const response = await fetch(`${endpoint}?id=${eventId}`, {
         method: 'DELETE',
       });
@@ -236,7 +236,7 @@ export default function AdminPage() {
       }
 
       // Send request
-      const response = await fetch('/api/ourEvents', {
+      const response = await fetch('/api/media', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -257,7 +257,7 @@ export default function AdminPage() {
         image: null,
         location: '',
       });
-      setMessage('Our Event created successfully!');
+      setMessage('Media Event created successfully!');
       setShowOurEventForm(false);
     } catch (error) {
       console.error('Error creating event:', error);
